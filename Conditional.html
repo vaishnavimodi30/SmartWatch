@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Watch</title>
+    <style>
+        body {
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+        }
+        
+        .watch {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #111 60%, #000);
+            box-shadow: 0 0 40px lime, inset 0 0 30px rgba(0, 255, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: lime;
+            text-align: center;
+            transition: transform 1s, box-shadow 1s, background 1s;
+        }
+        
+        .watch:hover {
+            animation: hoverColor 30s infinite alternate, pulseScale 3s infinite ease-in-out;
+        }
+        
+        @keyframes pulseScale {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes hoverColor {
+            0% {
+                background: radial-gradient(circle at center, #111 60%, #000);
+                box-shadow: 0 0 40px lime, inset 0 0 30px rgba(0, 255, 0, 0.3);
+            }
+            25% {
+                background: radial-gradient(circle at center, #222 60%, #003300);
+                box-shadow: 0 0 50px cyan, inset 0 0 35px rgba(0, 255, 255, 0.3);
+            }
+            50% {
+                background: radial-gradient(circle at center, #333 60%, #006600);
+                box-shadow: 0 0 60px magenta, inset 0 0 40px rgba(255, 0, 255, 0.3);
+            }
+            75% {
+                background: radial-gradient(circle at center, #444 60%, #009900);
+                box-shadow: 0 0 70px yellow, inset 0 0 45px rgba(255, 255, 0, 0.3);
+            }
+            100% {
+                background: radial-gradient(circle at center, #111 60%, #000);
+                box-shadow: 0 0 40px lime, inset 0 0 30px rgba(0, 255, 0, 0.3);
+            }
+        }
+        
+        #time {
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 0 0 15px lime;
+            transition: text-shadow 1s, color 1s;
+
+        }
+        
+        
+        #date {
+            font-size: 20px;
+            font-weight: bold;
+            color: cyan;
+            margin-top: 10px;
+            text-shadow: 0 0 10px cyan;
+            transition: text-shadow 1s, color 1s;
+        }
+        
+        .watch:hover #time {
+            animation: textGlow 5s infinite alternate;
+        }
+        
+        .watch:hover #date {
+            animation: dateGlow 5s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 10px lime, 0 0 20px lime;
+                color: lime;
+            }
+            50% {
+                text-shadow: 0 0 20px cyan, 0 0 40px cyan;
+                color: cyan;
+            }
+            100% {
+                text-shadow: 0 0 10px magenta, 0 0 20px magenta;
+                color: magenta;
+            }
+        }
+        
+        @keyframes dateGlow {
+            0% {
+                text-shadow: 0 0 5px cyan, 0 0 10px cyan;
+                color: cyan;
+            }
+            50% {
+                text-shadow: 0 0 10px yellow, 0 0 20px yellow;
+                color: yellow;
+            }
+            100% {
+                text-shadow: 0 0 5px magenta, 0 0 10px magenta;
+                color: magenta;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="watch">
+        <div id="time"></div>
+        <div id="date"></div>
+    </div>
+
+    <script>
+        function showTime() {
+            let date = new Date();
+
+            let h = date.getHours();
+            let m = date.getMinutes();
+            let s = date.getSeconds();
+            let session = "AM";
+
+            if (h == 0) h = 12;
+            if (h > 12) {
+                h = h - 12;
+                session = "PM";
+            }
+
+            h = (h < 10) ? "0" + h : h;
+            m = (m < 10) ? "0" + m : m;
+            s = (s < 10) ? "0" + s : s;
+
+            let time = h + ":" + m + ":" + s + " " + session;
+            document.getElementById("time").innerHTML = time;
+
+            // Date in DD-MM-YYYY
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+
+            day = (day < 10) ? "0" + day : day;
+            month = (month < 10) ? "0" + month : month;
+
+            let today = day + "-" + month + "-" + year;
+            document.getElementById("date").innerHTML = today;
+        }
+
+        setInterval(showTime, 1000);
+        showTime();
+    </script>
+</body>
+
+</html>
